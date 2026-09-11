@@ -103,7 +103,7 @@ function App() {
   }
 
   return (
-    <div className="app-shell">
+    <div className="app-shell relative min-h-screen overflow-hidden bg-[#070812] text-[#eef0ff]">
       <Topbar
         user={user}
         query={query}
@@ -115,7 +115,7 @@ function App() {
         onMenuToggle={() => setSidebar((s) => !s)}
       />
 
-      <div className="workspace">
+      <div className="relative z-[1] flex gap-[clamp(12px,2vw,22px)] max-w-[1560px] mx-auto px-[clamp(14px,2.4vw,28px)] py-[22px] max-[850px]:pt-[14px]">
         <Sidebar
           open={sidebar}
           view={view}
@@ -128,7 +128,7 @@ function App() {
           onProject={handleProject}
         />
 
-        <main className="main-content">
+        <main className="flex-1 min-w-0 flex flex-col gap-4">
           {view === "search" && (
             <SearchView
               query={query}
@@ -198,7 +198,9 @@ function App() {
         />
       )}
 
-      <div className="user-status">Signed in as {user.email}</div>
+      <div className="fixed right-3.5 bottom-3 z-[3] text-[10px] tracking-wide text-[rgba(238,240,255,0.32)] [font-family:'DM_Mono',monospace] max-[520px]:hidden">
+        Signed in as {user.email}
+      </div>
     </div>
   );
 }

@@ -113,7 +113,7 @@ export function TagPicker({
           </div>
 
           {error && (
-            <div className="mt-1.5 text-[#ef4444] text-[11.5px]">{error}</div>
+            <div className="mt-1.5 text-[#ffcf94] text-[11.5px]">{error}</div>
           )}
         </>
       )}

@@ -105,8 +105,10 @@ export function TagManagerModal({ session, onSession, onClose }) {
 
           {error && <div className="error-message">{error}</div>}
 
-          {/* Existing tags label — kept in CSS for uppercase + letter-spacing */}
-          <div className="tag-manager-label">
+          {/* Existing tags label — .tag-manager-label was referenced but never
+              defined in App.css, so this rendered as plain unstyled text.
+              Styled here in Tailwind to match the app's .side-label pattern. */}
+          <div className="mt-6 mb-2 text-[11px] tracking-[0.12em] uppercase text-[rgba(238,240,255,0.42)]">
             Existing tags ({tags.length})
           </div>
 

@@ -31,14 +31,14 @@ export function DocumentCard({ doc, onClick, session, onSession }) {
 
   return (
     <>
-      {/* document-card kept in CSS — glassmorphism + hover transform */}
+      {/* document-card kept in CSS — glassmorphism + hover transform, shared with .thread-card/.source-card */}
       <div
         className="document-card"
         onClick={(event) => { event.stopPropagation(); handlePreview(); }}
         role="button"
         tabIndex={0}
       >
-        {/* doc-icon kept in CSS — glass bg + border */}
+        {/* doc-icon kept in CSS — glass bg + border, shared with .source-icon */}
         <span className="doc-icon">{doc.icon || getDocumentIcon(doc.mime_type)}</span>
 
         <span className="flex flex-1 min-w-0 flex-col gap-[5px]">
@@ -62,7 +62,7 @@ export function DocumentCard({ doc, onClick, session, onSession }) {
           </span>
         </span>
 
-        {/* secondary-action kept in CSS — glass button style */}
+        {/* secondary-action kept in CSS — glass button style, shared across the app */}
         <button
           className="secondary-action"
           onClick={(event) => { event.stopPropagation(); handlePreview(); }}
@@ -72,26 +72,26 @@ export function DocumentCard({ doc, onClick, session, onSession }) {
       </div>
 
       {previewError && (
-        <div className="py-12 px-6 text-center text-[#64748b]">{previewError}</div>
+        <div className="py-12 px-6 text-center text-[rgba(238,240,255,0.5)]">{previewError}</div>
       )}
 
       {previewURL && (
         <div
-          className="fixed inset-0 bg-black/70 z-[9000] flex items-center justify-center"
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9000] flex items-center justify-center"
           onClick={() => setPreviewURL(null)}
         >
           <div
-            className="bg-[#1c1f26] border border-[#2e3340] rounded-xl w-[80vw] h-[85vh] flex flex-col overflow-hidden"
+            className="bg-gradient-to-b from-[rgba(22,24,44,0.94)] to-[rgba(12,13,26,0.97)] backdrop-blur-2xl backdrop-saturate-150 border border-white/[0.14] shadow-[0_30px_80px_rgba(0,0,0,0.55)] rounded-2xl w-[80vw] h-[85vh] flex flex-col overflow-hidden"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[#2e3340] text-[0.9rem] text-[#e2e8f0]">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.12] text-[0.9rem] text-[#eef0ff]">
               <span>{title}</span>
               <div className="flex gap-2">
                 <a className="secondary-action" href={previewURL} download={title}>
                   Download
                 </a>
                 <button
-                  className="bg-transparent border-0 text-[#4a5568] text-[1.1rem] cursor-pointer leading-none p-0 flex-shrink-0 transition-colors hover:text-[#94a3b8]"
+                  className="bg-transparent border-0 text-[rgba(238,240,255,0.45)] text-[1.1rem] cursor-pointer leading-none p-0 flex-shrink-0 transition-colors hover:text-[#a9b4ff]"
                   onClick={() => setPreviewURL(null)}
                 >
                   ×
@@ -132,7 +132,7 @@ function MarkdownPreview({ url }) {
   }, [url]);
 
   return (
-    <pre className="flex-1 p-6 overflow-auto text-[0.9rem] text-[#94a3b8] whitespace-pre-wrap break-words">
+    <pre className="flex-1 p-6 overflow-auto text-[0.9rem] text-[rgba(238,240,255,0.65)] whitespace-pre-wrap break-words [font-family:'DM_Mono',monospace]">
       {text}
     </pre>
   );

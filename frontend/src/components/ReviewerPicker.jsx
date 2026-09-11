@@ -38,15 +38,16 @@ export function ReviewerPicker({ doc, users, session, onSession, onUpdated }) {
 
   return (
     <div className="relative">
-      {/* Show current reviewer or assign button */}
+      {/* Show current reviewer or assign button — retheme to the app's success-green,
+          matching the "current" status pill instead of the old unrelated dark-green/slate */}
       {currentReviewer ? (
-        <div className="flex items-center gap-2 bg-[#1c2a1c] border border-[#3a5a3a] rounded-full py-1 px-2.5 pl-1">
+        <div className="flex items-center gap-2 bg-[rgba(95,227,161,0.12)] border border-[rgba(95,227,161,0.35)] rounded-full py-1 px-2.5 pl-1">
           <UserAvatar user={currentReviewer} size={28} />
-          <span className="text-[0.82rem] text-[#e2e8f0] max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+          <span className="text-[0.82rem] text-[#eef0ff] max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
             {currentReviewer.name || currentReviewer.email}
           </span>
           <button
-            className="bg-transparent border-0 text-[#6fcf6f] text-[0.78rem] cursor-pointer p-0"
+            className="bg-transparent border-0 text-[rgba(238,240,255,0.65)] text-[0.78rem] cursor-pointer p-0 transition-colors hover:text-[#eef0ff]"
             onClick={() => setOpen((o) => !o)}
             disabled={loading}
           >
@@ -63,13 +64,14 @@ export function ReviewerPicker({ doc, users, session, onSession, onUpdated }) {
         </button>
       )}
 
-      {/* Dropdown picker — keeps reviewer-dropdown CSS for shadow */}
+      {/* Dropdown picker — rebuilt as a glass panel matching the app's detail-panel /
+          preview-modal system instead of the old flat slate .reviewer-dropdown CSS */}
       {open && (
-        <div className="reviewer-dropdown">
-          <div className="flex justify-between items-center px-4 py-3 border-b border-[#2e3340] text-[0.82rem] font-semibold text-[#94a3b8]">
+        <div className="absolute right-0 top-[calc(100%+8px)] w-[280px] z-[500] rounded-2xl overflow-hidden border border-white/[0.14] bg-gradient-to-b from-[rgba(22,24,44,0.94)] to-[rgba(12,13,26,0.97)] backdrop-blur-2xl backdrop-saturate-150 shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
+          <div className="flex justify-between items-center px-4 py-3 border-b border-white/[0.12] text-[0.82rem] font-semibold text-[rgba(238,240,255,0.55)]">
             <span>Select reviewer</span>
             <button
-              className="bg-transparent border-0 text-[#4a5568] text-[1.1rem] cursor-pointer leading-none p-0 flex-shrink-0 transition-colors hover:text-[#94a3b8]"
+              className="bg-transparent border-0 text-[rgba(238,240,255,0.45)] text-[1.1rem] cursor-pointer leading-none p-0 flex-shrink-0 transition-colors hover:text-[#a9b4ff]"
               onClick={() => setOpen(false)}
             >
               ×
@@ -82,23 +84,23 @@ export function ReviewerPicker({ doc, users, session, onSession, onUpdated }) {
                 key={user.id}
                 className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg border-0 cursor-pointer w-full text-left transition-colors duration-150 disabled:opacity-50 ${
                   user.id === doc.reviewer_id
-                    ? "bg-[#1c2a1c] cursor-default"
-                    : "bg-transparent hover:bg-[#2e3340]"
+                    ? "bg-[rgba(95,227,161,0.12)] cursor-default"
+                    : "bg-transparent hover:bg-white/[0.08]"
                 }`}
                 onClick={() => handleAssign(user.id)}
                 disabled={loading || user.id === doc.reviewer_id}
               >
                 <UserAvatar user={user} size={32} />
                 <div className="flex flex-col gap-px min-w-0">
-                  <span className="text-[0.85rem] text-[#e2e8f0] font-medium">
+                  <span className="text-[0.85rem] text-[#eef0ff] font-medium">
                     {user.name || "Unknown"}
                   </span>
-                  <span className="text-xs text-[#64748b] overflow-hidden text-ellipsis whitespace-nowrap">
+                  <span className="text-xs text-[rgba(238,240,255,0.5)] overflow-hidden text-ellipsis whitespace-nowrap">
                     {user.email}
                   </span>
                 </div>
                 {user.id === doc.reviewer_id && (
-                  <span className="ml-auto text-[0.7rem] text-[#6fcf6f] border border-[#3a5a3a] rounded-[10px] px-1.5 py-px flex-shrink-0">
+                  <span className="ml-auto text-[0.7rem] text-[#8ff0c0] border border-[rgba(95,227,161,0.4)] rounded-[10px] px-1.5 py-px flex-shrink-0">
                     Current
                   </span>
                 )}
@@ -109,7 +111,7 @@ export function ReviewerPicker({ doc, users, session, onSession, onUpdated }) {
           {/* Remove reviewer option */}
           {doc.reviewer_id && (
             <button
-              className="w-full px-4 py-2.5 bg-transparent border-0 border-t border-[#2e3340] text-[#ef4444] text-[0.82rem] cursor-pointer text-left transition-colors hover:bg-[#2a1c1c]"
+              className="w-full px-4 py-2.5 bg-transparent border-0 border-t border-white/[0.12] text-[#ff8a8a] text-[0.82rem] cursor-pointer text-left transition-colors hover:bg-[rgba(255,106,106,0.1)]"
               onClick={handleRemove}
               disabled={loading}
             >
@@ -117,7 +119,7 @@ export function ReviewerPicker({ doc, users, session, onSession, onUpdated }) {
             </button>
           )}
 
-          {error && <div className="error-message">{error}</div>}
+          {error && <div className="error-message mx-3 mb-3">{error}</div>}
         </div>
       )}
     </div>
@@ -143,7 +145,7 @@ export function UserAvatar({ user, size = 32 }) {
     />
   ) : (
     <div
-      className="rounded-full bg-[#2e3340] text-[#94a3b8] flex items-center justify-center font-semibold flex-shrink-0"
+      className="rounded-full bg-white/[0.08] border border-white/[0.14] text-[rgba(238,240,255,0.75)] flex items-center justify-center font-semibold flex-shrink-0"
       style={{ width: size, height: size, fontSize: size * 0.38 }}
     >
       {initials}
